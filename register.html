@@ -121,7 +121,7 @@
 
     <!-- Form wrap (hidden on success) -->
     <div id="formWrap">
-      <form id="registrationForm" novalidate data-form-endpoint="https://formsubmit.co/ajax/rockbisonbyjimin@gmail.com">
+      <form id="registrationForm" novalidate data-formspree-endpoint="https://formspree.io/f/xbdvzobl">
 
         <!-- Hidden field to carry event name into email -->
         <input type="hidden" id="hiddenEvent" name="event" value="" />
@@ -365,33 +365,6 @@
                   <input class="pill-option" type="checkbox" name="source" id="src-x"   value="X / Twitter" />
                   <label for="src-x">X / Twitter</label>
                 </div>
-              </div>
-            </div>
-
-            <div class="form-row full">
-              <div class="field-group">
-                <label class="field-label" for="paymentProof">
-                  Proof of Payment <span class="field-optional">(only if this event requires a paid ticket)</span>
-                </label>
-
-                <div class="file-upload-wrap">
-                  <input
-                    class="field-file"
-                    type="file"
-                    id="paymentProof"
-                    name="paymentProof"
-                    accept="image/jpeg,image/png,image/webp,application/pdf"
-                  />
-                  <label for="paymentProof" class="file-upload-label" id="fileUploadLabel">
-                    <span class="file-upload-icon">📎</span>
-                    <span class="file-upload-text" id="fileUploadText">
-                      Click to upload receipt or screenshot &nbsp;·&nbsp; JPG, PNG or PDF &nbsp;·&nbsp; max 5MB
-                    </span>
-                  </label>
-                  <button type="button" class="file-remove-btn" id="fileRemoveBtn" aria-label="Remove file">✕</button>
-                </div>
-
-                <span class="field-error-msg" id="paymentProofError">Please upload a JPG, PNG or PDF file under 5MB.</span>
               </div>
             </div>
 
