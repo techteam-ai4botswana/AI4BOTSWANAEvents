@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI4Botswana — Events</title>
+  <meta name="description" content="Discover and register for AI4Botswana events — workshops, conferences, networking sessions and more in Gaborone, Botswana." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* ── HERO BANNER ── */
+    .hero-banner {
+      margin-top: 72px;
+      width: 100%;
+      height: 340px;
+      position: relative;
+      overflow: hidden;
+      background: #0f1a2e;
+    }
+
+    /* SVG mesh fills the banner */
+    .hero-mesh {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Overlay text rendered inside SVG foreignObject */
+    .banner-overlay-text {
+      width: 100%;
+      height: 340px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 24px 90px;
+      pointer-events: none;
+    }
+
+    .banner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(77,200,212,0.15);
+      border: 1px solid rgba(77,200,212,0.4);
+      color: #7DE8F0;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 2px;
+      margin-bottom: 16px;
+    }
+
+    .banner-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: #4DC8D4;
+      border-radius: 50%;
+      display: inline-block;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    .banner-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(32px, 4.5vw, 58px);
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+
+    .banner-title .accent { color: #4DC8D4; }
+    .banner-title .gold   { color: #D4A832; }
+
+    /* Event info card overlaid on banner bottom — like the Stellenbosch card */
+    .hero-event-card {
+      position: absolute;
+      bottom: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      padding: 28px 40px 24px;
+      text-align: center;
+      min-width: 560px;
+      max-width: 760px;
+      width: 90%;
+      box-shadow: 0 -4px 32px rgba(27,42,74,0.14);
+    }
+
+    .hero-card-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.02em;
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+
+    .hero-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .hero-card-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: var(--text-mid);
+      font-family: var(--font-mono);
+      letter-spacing: 0.04em;
+    }
+
+    .hero-card-meta-item .icon { font-size: 15px; }
+
+    .hero-card-register {
+      background: var(--cyan);
+      color: var(--navy);
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 11px 36px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-block;
+      text-decoration: none;
+    }
+
+    .hero-card-register:hover {
+      background: var(--cyan-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(77,200,212,0.4);
+    }
+
+    /* ── UPCOMING SECTION — dark navy with HUD pattern ── */
+    .upcoming-section {
+      background: #0b1628;
+      position: relative;
+      overflow: hidden;
+      padding-top: 0;
+    }
+
+    /* The SVG HUD pattern sits behind everything */
+    .section-hud-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Section content sits above the pattern */
+    .upcoming-section .section-wrap {
+      position: relative;
+      z-index: 1;
+      padding-top: 80px;
+    }
+
+    /* Override section label, heading, sub colours for dark bg */
+    .upcoming-section .section-label {
+      color: #4DC8D4;
+    }
+    .upcoming-section .section-label::before {
+      background: #D4A832;
+    }
+    .upcoming-section .section-heading {
+      color: #F0F4FF;
+    }
+    .upcoming-section .section-heading .muted {
+      color: rgba(240,244,255,0.25);
+    }
+    .upcoming-section .section-sub {
+      color: rgba(240,244,255,0.55);
+    }
+
+    /* Cards on dark bg — slightly elevated glass look */
+    .upcoming-section .event-card {
+      background: rgba(255,255,255,0.04);
+      border-color: rgba(77,200,212,0.2);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+    .upcoming-section .event-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(77,200,212,0.55);
+      box-shadow: 0 8px 40px rgba(77,200,212,0.15);
+    }
+    .upcoming-section .card-date-band {
+      border-bottom-color: rgba(77,200,212,0.15);
+    }
+    .upcoming-section .card-title { color: #F0F4FF; }
+    .upcoming-section .card-location { color: rgba(240,244,255,0.45); }
+    .upcoming-section .card-desc { color: rgba(240,244,255,0.55); }
+    .upcoming-section .card-thumb-placeholder {
+      background: linear-gradient(135deg, #0f2240 0%, #1a3a4a 100%);
+      color: rgba(77,200,212,0.3);
+    }
+    .upcoming-section .btn-card-details {
+      background: transparent;
+      border-color: rgba(240,244,255,0.15);
+      color: rgba(240,244,255,0.45);
+    }
+    .upcoming-section .btn-card-details:hover {
+      border-color: #4DC8D4;
+      color: #4DC8D4;
+    }
+
+    /* Empty state — dark version */
+    .events-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 24px;
+      border: 1px dashed rgba(77,200,212,0.25);
+      border-radius: 8px;
+      position: relative;
+    }
+
+    /* HUD corner accents on empty state */
+    .events-empty::before,
+    .events-empty::after {
+      content: '';
+      position: absolute;
+      width: 20px; height: 20px;
+      border-color: rgba(77,200,212,0.4);
+      border-style: solid;
+    }
+    .events-empty::before {
+      top: 12px; left: 12px;
+      border-width: 2px 0 0 2px;
+    }
+    .events-empty::after {
+      bottom: 12px; right: 12px;
+      border-width: 0 2px 2px 0;
+    }
+
+    .events-empty-icon {
+      font-size: 40px;
+      margin-bottom: 14px;
+      opacity: 0.3;
+    }
+
+    .events-empty-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: rgba(240,244,255,0.6);
+      margin-bottom: 8px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .events-empty p {
+      font-size: 14px;
+      color: rgba(240,244,255,0.35);
+      line-height: 1.7;
+      max-width: 400px;
+      margin: 0 auto;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.04em;
+    }
+
+    /* Past events empty — stays light since past section is off-white */
+    .past-empty {
+      padding: 40px 24px;
+      text-align: center;
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      color: var(--text-light);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* Gold divider on dark becomes subtle */
+    .upcoming-section + .gold-divider {
+      background: linear-gradient(90deg, #0b1628, #D4A832, #0b1628);
+    }
+
+    @media (max-width: 700px) {
+      .hero-banner { height: 260px; }
+      .hero-event-card { min-width: unset; padding: 20px 20px 18px; }
+      .hero-card-title { font-size: 17px; }
+      .hero-card-meta { gap: 14px; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════════════════ -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="logo.jpg" alt="AI4Botswana Logo" />
+    <span class="nav-logo-text">AI4<span>Botswana</span></span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#upcoming">Events</a></li>
+    <li><a href="#about">About</a></li>
+    
+  </ul>
+
+  <a href="#upcoming" class="nav-btn">Register Now</a>
+
+  <button class="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="hero-banner">
+
+  <!-- ── Mesh network SVG — brand colours from logo palette ── -->
+  <svg class="hero-mesh" viewBox="0 0 1440 340" preserveAspectRatio="xMidYMid slice"
+       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <!-- Base dark background gradient -->
+      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%"   stop-color="#0b1628"/>
+        <stop offset="45%"  stop-color="#0f2240"/>
+        <stop offset="100%" stop-color="#0d2a35"/>
+      </linearGradient>
+
+      <!-- Mesh line colour — cyan/teal at low opacity -->
+      <linearGradient id="meshGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%"   stop-color="#4DC8D4" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="#2A7B8C" stop-opacity="0.15"/>
+      </linearGradient>
+
+      <!-- Bright sweep gradient -->
+      <radialGradient id="sweepGrad" cx="30%" cy="70%" r="65%">
+        <stop offset="0%"   stop-color="#4DC8D4" stop-opacity="0.35"/>
+        <stop offset="40%"  stop-color="#2E5F8A" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="#0b1628"  stop-opacity="0"/>
+      </radialGradient>
+
+      <!-- Gold accent glow -->
+      <radialGradient id="goldGlow" cx="72%" cy="30%" r="35%">
+        <stop offset="0%"   stop-color="#D4A832" stop-opacity="0.18"/>
+        <stop offset="100%" stop-color="#D4A832" stop-opacity="0"/>
+      </radialGradient>
+
+      <!-- Clip to viewBox -->
+      <clipPath id="bannerClip">
+        <rect width="1440" height="340"/>
+      </clipPath>
+    </defs>
+
+    <!-- Background -->
+    <rect width="1440" height="340" fill="url(#bgGrad)"/>
+
+    <!-- Sweep glow layer -->
+    <rect width="1440" height="340" fill="url(#sweepGrad)"/>
+    <rect width="1440" height="340" fill="url(#goldGlow)"/>
+
+    <!-- ── MESH NETWORK ── all lines + nodes clipped -->
+    <g clip-path="url(#bannerClip)" stroke="url(#meshGrad1)" stroke-width="0.7" fill="none">
+
+      <!-- Grid of triangle mesh nodes (hand-placed for natural feel) -->
+      <!-- Row 0 (top) -->
+      <line x1="-20"  y1="10"  x2="180" y2="85"/>
+      <line x1="180"  y1="85"  x2="60"  y2="190"/>
+      <line x1="60"   y1="190" x2="-20" y2="10"/>
+      <line x1="180"  y1="85"  x2="340" y2="30"/>
+      <line x1="340"  y1="30"  x2="420" y2="140"/>
+      <line x1="420"  y1="140" x2="180" y2="85"/>
+      <line x1="340"  y1="30"  x2="560" y2="60"/>
+      <line x1="560"  y1="60"  x2="520" y2="175"/>
+      <line x1="520"  y1="175" x2="420" y2="140"/>
+      <line x1="560"  y1="60"  x2="740" y2="20"/>
+      <line x1="740"  y1="20"  x2="700" y2="130"/>
+      <line x1="700"  y1="130" x2="520" y2="175"/>
+      <line x1="740"  y1="20"  x2="900" y2="55"/>
+      <line x1="900"  y1="55"  x2="860" y2="160"/>
+      <line x1="860"  y1="160" x2="700" y2="130"/>
+      <line x1="900"  y1="55"  x2="1080" y2="15"/>
+      <line x1="1080" y1="15"  x2="1060" y2="130"/>
+      <line x1="1060" y1="130" x2="860" y2="160"/>
+      <line x1="1080" y1="15"  x2="1260" y2="50"/>
+      <line x1="1260" y1="50"  x2="1220" y2="155"/>
+      <line x1="1220" y1="155" x2="1060" y2="130"/>
+      <line x1="1260" y1="50"  x2="1460" y2="10"/>
+      <line x1="1460" y1="10"  x2="1440" y2="120"/>
+      <line x1="1440" y1="120" x2="1220" y2="155"/>
+
+      <!-- Row 1 (mid) -->
+      <line x1="60"   y1="190" x2="180" y2="85"/>
+      <line x1="60"   y1="190" x2="240" y2="255"/>
+      <line x1="240"  y1="255" x2="420" y2="140"/>
+      <line x1="420"  y1="140" x2="240" y2="255"/>
+      <line x1="240"  y1="255" x2="520" y2="175"/>
+      <line x1="520"  y1="175" x2="620" y2="270"/>
+      <line x1="620"  y1="270" x2="700" y2="130"/>
+      <line x1="700"  y1="130" x2="620" y2="270"/>
+      <line x1="620"  y1="270" x2="860" y2="160"/>
+      <line x1="860"  y1="160" x2="800" y2="275"/>
+      <line x1="800"  y1="275" x2="1060" y2="130"/>
+      <line x1="1060" y1="130" x2="980" y2="265"/>
+      <line x1="980"  y1="265" x2="1220" y2="155"/>
+      <line x1="1220" y1="155" x2="1160" y2="270"/>
+      <line x1="1160" y1="270" x2="1440" y2="120"/>
+      <line x1="1440" y1="120" x2="1380" y2="260"/>
+
+      <!-- Row 2 (bottom) -->
+      <line x1="-20"  y1="320" x2="60"  y2="190"/>
+      <line x1="-20"  y1="320" x2="240" y2="255"/>
+      <line x1="240"  y1="255" x2="100" y2="340"/>
+      <line x1="100"  y1="340" x2="420" y2="140"/>
+      <line x1="420"  y1="140" x2="380" y2="340"/>
+      <line x1="380"  y1="340" x2="620" y2="270"/>
+      <line x1="620"  y1="270" x2="580" y2="340"/>
+      <line x1="580"  y1="340" x2="800" y2="275"/>
+      <line x1="800"  y1="275" x2="760" y2="340"/>
+      <line x1="760"  y1="340" x2="980" y2="265"/>
+      <line x1="980"  y1="265" x2="940" y2="340"/>
+      <line x1="940"  y1="340" x2="1160" y2="270"/>
+      <line x1="1160" y1="270" x2="1120" y2="340"/>
+      <line x1="1120" y1="340" x2="1380" y2="260"/>
+      <line x1="1380" y1="260" x2="1300" y2="340"/>
+      <line x1="1300" y1="340" x2="1460" y2="340"/>
+
+      <!-- Extra diagonals to make it feel more like a mesh wave sweep -->
+      <line x1="60"   y1="190" x2="420" y2="140" stroke-opacity="0.25"/>
+      <line x1="240"  y1="255" x2="700" y2="130" stroke-opacity="0.2"/>
+      <line x1="520"  y1="175" x2="1060" y2="130" stroke-opacity="0.18"/>
+      <line x1="800"  y1="275" x2="1440" y2="120" stroke-opacity="0.15"/>
+      <line x1="100"  y1="340" x2="860" y2="160" stroke-opacity="0.15"/>
+      <line x1="380"  y1="340" x2="1220" y2="155" stroke-opacity="0.12"/>
+      <line x1="580"  y1="340" x2="1460" y2="10"  stroke-opacity="0.1"/>
+    </g>
+
+    <!-- ── NODE DOTS at mesh intersections ── -->
+    <g fill="#4DC8D4" clip-path="url(#bannerClip)">
+      <!-- Bright nodes (larger) -->
+      <circle cx="180"  cy="85"  r="2.8" opacity="0.9"/>
+      <circle cx="560"  cy="60"  r="2.8" opacity="0.85"/>
+      <circle cx="900"  cy="55"  r="2.8" opacity="0.9"/>
+      <circle cx="1260" cy="50"  r="2.8" opacity="0.8"/>
+      <circle cx="620"  cy="270" r="2.5" opacity="0.7"/>
+      <circle cx="980"  cy="265" r="2.5" opacity="0.75"/>
+      <circle cx="60"   cy="190" r="2.2" opacity="0.65"/>
+      <circle cx="700"  cy="130" r="2.2" opacity="0.7"/>
+      <circle cx="1060" cy="130" r="2.2" opacity="0.7"/>
+      <circle cx="240"  cy="255" r="2.0" opacity="0.55"/>
+      <circle cx="800"  cy="275" r="2.0" opacity="0.6"/>
+      <circle cx="1160" cy="270" r="2.0" opacity="0.6"/>
+      <circle cx="420"  cy="140" r="2.0" opacity="0.6"/>
+      <circle cx="860"  cy="160" r="2.0" opacity="0.6"/>
+      <circle cx="1220" cy="155" r="2.0" opacity="0.6"/>
+      <circle cx="520"  cy="175" r="1.8" opacity="0.5"/>
+      <circle cx="340"  cy="30"  r="1.8" opacity="0.5"/>
+      <circle cx="740"  cy="20"  r="1.8" opacity="0.5"/>
+      <circle cx="1080" cy="15"  r="1.8" opacity="0.5"/>
+      <!-- Gold tinted accent nodes -->
+      <circle cx="340"  cy="30"  r="1.5" fill="#D4A832" opacity="0.6"/>
+      <circle cx="1080" cy="15"  r="1.5" fill="#D4A832" opacity="0.55"/>
+      <circle cx="800"  cy="275" r="1.5" fill="#D4A832" opacity="0.4"/>
+      <!-- Tiny satellite dots (micro stars) -->
+      <circle cx="460"  cy="95"  r="1.0" opacity="0.4"/>
+      <circle cx="630"  cy="115" r="1.0" opacity="0.35"/>
+      <circle cx="960"  cy="100" r="1.0" opacity="0.4"/>
+      <circle cx="1150" cy="90"  r="1.0" opacity="0.35"/>
+      <circle cx="150"  cy="300" r="1.0" opacity="0.3"/>
+      <circle cx="490"  cy="310" r="1.0" opacity="0.3"/>
+      <circle cx="870"  cy="315" r="1.0" opacity="0.3"/>
+      <circle cx="1240" cy="305" r="1.0" opacity="0.3"/>
+    </g>
+
+    <!-- ── Teal glowing sweep curve (the "wave" from your inspo image) ── -->
+    <path
+      d="M -40 280 Q 320 80 700 200 Q 1080 320 1480 100"
+      stroke="#4DC8D4"
+      stroke-width="1.5"
+      stroke-opacity="0.35"
+      fill="none"
+    />
+    <path
+      d="M -40 310 Q 300 110 680 230 Q 1060 350 1480 140"
+      stroke="#2A7B8C"
+      stroke-width="0.8"
+      stroke-opacity="0.25"
+      fill="none"
+    />
+
+    <!-- Banner text overlay -->
+    <foreignObject x="0" y="0" width="1440" height="340">
+      <div xmlns="http://www.w3.org/1999/xhtml" class="banner-overlay-text">
+        <div class="banner-badge">AI4Botswana Events Portal</div>
+        <h1 class="banner-title">
+          Where <span class="accent">Innovation</span>
+          Meets <span class="gold">Possibility</span>
+        </h1>
+      </div>
+    </foreignObject>
+  </svg>
+
+  <!-- ── FEATURED EVENT CARD ──────────────────────────────────
+       Shows the next/highlighted event at the bottom of the
+       banner. Update the details below for each new event.
+       Remove this entire block if you don't want a featured card.
+  ─────────────────────────────────────────────────────────── -->
+
+  </div>
+
+</div><!-- /hero-banner -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     TICKER — AI Facts & Stats
+═══════════════════════════════════════════════════════════ -->
+<div class="ticker-strip">
+
+  <!-- Left label badge -->
+  <div class="ticker-label">
+    <span class="ticker-label-dot"></span>
+    AI INSIGHTS
+  </div>
+
+  <!-- Scrolling track -->
+  <div class="ticker-overflow">
+    <div class="ticker-track">
+
+      <!-- Set 1 -->
+      <span class="ticker-item">
+        <span class="ticker-icon">🌍</span>
+        Africa has <strong>700M+</strong> mobile users
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">📈</span>
+        AI could add <strong>$1.2 trillion</strong> to Africa's GDP by 2030
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">🤖</span>
+        Botswana's digital economy is growing at <strong>12% per year</strong>
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">🎓</span>
+        Only <strong>2.5%</strong> of global AI research originates from Africa
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">💡</span>
+        <strong>65%</strong> of African businesses plan to adopt AI by 2027
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">🏆</span>
+        Botswana ranks <strong>Top 5</strong> in Africa for ease of doing business
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">📡</span>
+        Sub-Saharan Africa has <strong>50%+ smartphone penetration</strong> and rising
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">🔬</span>
+        AI in healthcare could save <strong>10M+ lives</strong> in Africa by 2030
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <!-- Set 2 — duplicate for seamless loop -->
+      <span class="ticker-item">
+        <span class="ticker-icon">🌍</span>
+        Africa has <strong>700M+</strong> mobile users
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">📈</span>
+        AI could add <strong>$1.2 trillion</strong> to Africa's GDP by 2030
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">🤖</span>
+        Botswana's digital economy is growing at <strong>12% per year</strong>
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">🎓</span>
+        Only <strong>2.5%</strong> of global AI research originates from Africa
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">💡</span>
+        <strong>65%</strong> of African businesses plan to adopt AI by 2027
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">🏆</span>
+        Botswana ranks <strong>Top 5</strong> in Africa for ease of doing business
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">📡</span>
+        Sub-Saharan Africa has <strong>50%+ smartphone penetration</strong> and rising
+      </span>
+      <span class="ticker-divider">◆</span>
+
+      <span class="ticker-item">
+        <span class="ticker-icon">🔬</span>
+        AI in healthcare could save <strong>10M+ lives</strong> in Africa by 2030
+      </span>
+      <span class="ticker-divider">◆</span>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     UPCOMING EVENTS
+═══════════════════════════════════════════════════════════ -->
+<section id="upcoming" class="upcoming-section">
+
+  <!-- ── HUD / Circuit background pattern ─────────────────── -->
+  <svg class="section-hud-bg" viewBox="0 0 1440 700" preserveAspectRatio="xMidYMid slice"
+       xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <linearGradient id="hudLine" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="#4DC8D4" stop-opacity="0"/>
+        <stop offset="30%"  stop-color="#4DC8D4" stop-opacity="0.45"/>
+        <stop offset="70%"  stop-color="#4DC8D4" stop-opacity="0.45"/>
+        <stop offset="100%" stop-color="#4DC8D4" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="hudLineV" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%"   stop-color="#4DC8D4" stop-opacity="0"/>
+        <stop offset="30%"  stop-color="#4DC8D4" stop-opacity="0.3"/>
+        <stop offset="70%"  stop-color="#4DC8D4" stop-opacity="0.3"/>
+        <stop offset="100%" stop-color="#4DC8D4" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="goldLine" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%"   stop-color="#D4A832" stop-opacity="0"/>
+        <stop offset="50%"  stop-color="#D4A832" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#D4A832" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Fine grid base -->
+    <g stroke="#4DC8D4" stroke-width="0.3" stroke-opacity="0.07">
+      <!-- Vertical lines every 80px -->
+      <line x1="80"   y1="0" x2="80"   y2="700"/>
+      <line x1="160"  y1="0" x2="160"  y2="700"/>
+      <line x1="240"  y1="0" x2="240"  y2="700"/>
+      <line x1="320"  y1="0" x2="320"  y2="700"/>
+      <line x1="400"  y1="0" x2="400"  y2="700"/>
+      <line x1="480"  y1="0" x2="480"  y2="700"/>
+      <line x1="560"  y1="0" x2="560"  y2="700"/>
+      <line x1="640"  y1="0" x2="640"  y2="700"/>
+      <line x1="720"  y1="0" x2="720"  y2="700"/>
+      <line x1="800"  y1="0" x2="800"  y2="700"/>
+      <line x1="880"  y1="0" x2="880"  y2="700"/>
+      <line x1="960"  y1="0" x2="960"  y2="700"/>
+      <line x1="1040" y1="0" x2="1040" y2="700"/>
+      <line x1="1120" y1="0" x2="1120" y2="700"/>
+      <line x1="1200" y1="0" x2="1200" y2="700"/>
+      <line x1="1280" y1="0" x2="1280" y2="700"/>
+      <line x1="1360" y1="0" x2="1360" y2="700"/>
+      <!-- Horizontal lines every 80px -->
+      <line x1="0" y1="80"  x2="1440" y2="80"/>
+      <line x1="0" y1="160" x2="1440" y2="160"/>
+      <line x1="0" y1="240" x2="1440" y2="240"/>
+      <line x1="0" y1="320" x2="1440" y2="320"/>
+      <line x1="0" y1="400" x2="1440" y2="400"/>
+      <line x1="0" y1="480" x2="1440" y2="480"/>
+      <line x1="0" y1="560" x2="1440" y2="560"/>
+      <line x1="0" y1="640" x2="1440" y2="640"/>
+    </g>
+
+    <!-- ── FUTURISTIC LINE ELEMENTS (like your inspo) ─────── -->
+
+    <!-- Top-left: HUD bracket -->
+    <g stroke="#4DC8D4" stroke-width="1" fill="none" stroke-opacity="0.5">
+      <polyline points="60,40 20,40 20,100"/>
+      <polyline points="20,40 60,40"/>
+      <!-- Slash fill bar -->
+      <rect x="24" y="44" width="60" height="10" fill="#4DC8D4" fill-opacity="0.08" stroke="none"/>
+      <line x1="24" y1="44" x2="84" y2="44" stroke-opacity="0.4"/>
+      <line x1="24" y1="54" x2="84" y2="54" stroke-opacity="0.4"/>
+      <!-- Diagonal stripes inside bar -->
+      <line x1="30" y1="44" x2="24" y2="54" stroke-opacity="0.5"/>
+      <line x1="38" y1="44" x2="32" y2="54" stroke-opacity="0.5"/>
+      <line x1="46" y1="44" x2="40" y2="54" stroke-opacity="0.5"/>
+      <line x1="54" y1="44" x2="48" y2="54" stroke-opacity="0.5"/>
+      <line x1="62" y1="44" x2="56" y2="54" stroke-opacity="0.5"/>
+      <line x1="70" y1="44" x2="64" y2="54" stroke-opacity="0.5"/>
+      <line x1="78" y1="44" x2="72" y2="54" stroke-opacity="0.5"/>
+      <!-- Node dot -->
+      <circle cx="84" cy="49" r="2.5" fill="#4DC8D4" fill-opacity="0.7" stroke="none"/>
+    </g>
+
+    <!-- Top-right: mirror bracket -->
+    <g stroke="#4DC8D4" stroke-width="1" fill="none" stroke-opacity="0.5">
+      <polyline points="1380,40 1420,40 1420,100"/>
+      <rect x="1296" y="44" width="60" height="10" fill="#4DC8D4" fill-opacity="0.08" stroke="none"/>
+      <line x1="1296" y1="44" x2="1356" y2="44" stroke-opacity="0.4"/>
+      <line x1="1296" y1="54" x2="1356" y2="54" stroke-opacity="0.4"/>
+      <line x1="1302" y1="44" x2="1296" y2="54" stroke-opacity="0.5"/>
+      <line x1="1310" y1="44" x2="1304" y2="54" stroke-opacity="0.5"/>
+      <line x1="1318" y1="44" x2="1312" y2="54" stroke-opacity="0.5"/>
+      <line x1="1326" y1="44" x2="1320" y2="54" stroke-opacity="0.5"/>
+      <line x1="1334" y1="44" x2="1328" y2="54" stroke-opacity="0.5"/>
+      <line x1="1342" y1="44" x2="1336" y2="54" stroke-opacity="0.5"/>
+      <line x1="1350" y1="44" x2="1344" y2="54" stroke-opacity="0.5"/>
+      <circle cx="1292" cy="49" r="2.5" fill="#4DC8D4" fill-opacity="0.7" stroke="none"/>
+    </g>
+
+    <!-- Centre-top: circuit trace horizontal bar -->
+    <g stroke="#4DC8D4" stroke-width="1" fill="none" stroke-opacity="0.35">
+      <line x1="480" y1="28" x2="960" y2="28"/>
+      <!-- angled end caps -->
+      <polyline points="480,28 466,42"/>
+      <polyline points="960,28 974,42"/>
+      <!-- tick marks -->
+      <line x1="560" y1="24" x2="560" y2="32"/>
+      <line x1="640" y1="24" x2="640" y2="32"/>
+      <line x1="720" y1="24" x2="720" y2="32"/>
+      <line x1="800" y1="24" x2="800" y2="32"/>
+      <line x1="880" y1="24" x2="880" y2="32"/>
+      <!-- dot nodes -->
+      <circle cx="480" cy="28" r="2" fill="#4DC8D4" fill-opacity="0.6" stroke="none"/>
+      <circle cx="960" cy="28" r="2" fill="#4DC8D4" fill-opacity="0.6" stroke="none"/>
+      <circle cx="720" cy="28" r="3" fill="#D4A832" fill-opacity="0.55" stroke="none"/>
+    </g>
+
+    <!-- Left side: vertical circuit trace -->
+    <g stroke="#4DC8D4" stroke-width="0.8" fill="none" stroke-opacity="0.3">
+      <line x1="32" y1="150" x2="32" y2="550"/>
+      <polyline points="32,200 48,200 56,210"/>
+      <polyline points="32,300 48,300 56,290"/>
+      <polyline points="32,400 60,400"/>
+      <circle cx="32" cy="200" r="2" fill="#4DC8D4" fill-opacity="0.5" stroke="none"/>
+      <circle cx="32" cy="300" r="2" fill="#4DC8D4" fill-opacity="0.5" stroke="none"/>
+      <circle cx="32" cy="400" r="3" fill="#D4A832" fill-opacity="0.45" stroke="none"/>
+      <!-- Diagonal stripe block -->
+      <rect x="36" y="440" width="20" height="40" fill="none" stroke-opacity="0.4"/>
+      <line x1="36" y1="444" x2="56" y2="444" stroke-opacity="0.3"/>
+      <line x1="36" y1="450" x2="56" y2="450" stroke-opacity="0.3"/>
+      <line x1="36" y1="456" x2="56" y2="456" stroke-opacity="0.3"/>
+      <line x1="36" y1="462" x2="56" y2="462" stroke-opacity="0.3"/>
+      <line x1="36" y1="468" x2="56" y2="468" stroke-opacity="0.3"/>
+      <line x1="36" y1="474" x2="56" y2="474" stroke-opacity="0.3"/>
+    </g>
+
+    <!-- Right side: mirror vertical trace -->
+    <g stroke="#4DC8D4" stroke-width="0.8" fill="none" stroke-opacity="0.3">
+      <line x1="1408" y1="150" x2="1408" y2="550"/>
+      <polyline points="1408,220 1392,220 1384,230"/>
+      <polyline points="1408,350 1392,350 1384,340"/>
+      <polyline points="1408,450 1380,450"/>
+      <circle cx="1408" cy="220" r="2" fill="#4DC8D4" fill-opacity="0.5" stroke="none"/>
+      <circle cx="1408" cy="350" r="2" fill="#4DC8D4" fill-opacity="0.5" stroke="none"/>
+      <circle cx="1408" cy="450" r="3" fill="#D4A832" fill-opacity="0.45" stroke="none"/>
+    </g>
+
+    <!-- ── Glowing horizontal accent lines (HUD scanner style) -->
+    <line x1="0" y1="160" x2="1440" y2="160" stroke="url(#hudLine)" stroke-width="1"/>
+    <line x1="0" y1="400" x2="1440" y2="400" stroke="url(#goldLine)"  stroke-width="0.8"/>
+    <line x1="0" y1="580" x2="1440" y2="580" stroke="url(#hudLine)"  stroke-width="0.6"/>
+
+    <!-- ── Centre bottom: target reticle (subtle) ── -->
+    <g stroke="#4DC8D4" stroke-width="0.8" fill="none" stroke-opacity="0.18" transform="translate(720,620)">
+      <circle cx="0" cy="0" r="40"/>
+      <circle cx="0" cy="0" r="25"/>
+      <line x1="-50" y1="0"  x2="-30" y2="0"/>
+      <line x1="30"  y1="0"  x2="50"  y2="0"/>
+      <line x1="0"   y1="-50" x2="0"  y2="-30"/>
+      <line x1="0"   y1="30"  x2="0"  y2="50"/>
+      <!-- Corner ticks on inner circle -->
+      <line x1="-18" y1="-18" x2="-14" y2="-14"/>
+      <line x1="14"  y1="-14" x2="18"  y2="-18"/>
+      <line x1="14"  y1="14"  x2="18"  y2="18"/>
+      <line x1="-18" y1="18"  x2="-14" y2="14"/>
+    </g>
+
+    <!-- ── Small scatter elements ── -->
+    <!-- Diamond shapes -->
+    <polygon points="120,180 128,190 120,200 112,190" fill="none" stroke="#D4A832" stroke-width="0.8" stroke-opacity="0.3"/>
+    <polygon points="1320,260 1328,270 1320,280 1312,270" fill="none" stroke="#D4A832" stroke-width="0.8" stroke-opacity="0.3"/>
+    <polygon points="720,520 726,528 720,536 714,528" fill="none" stroke="#4DC8D4" stroke-width="0.8" stroke-opacity="0.25"/>
+    <!-- Mini crosshairs -->
+    <g stroke="#4DC8D4" stroke-width="0.7" stroke-opacity="0.3">
+      <line x1="200" y1="490" x2="214" y2="490"/>
+      <line x1="207" y1="483" x2="207" y2="497"/>
+      <line x1="1100" y1="200" x2="1114" y2="200"/>
+      <line x1="1107" y1="193" x2="1107" y2="207"/>
+    </g>
+    <!-- Dot cluster -->
+    <g fill="#4DC8D4" fill-opacity="0.25">
+      <circle cx="360" cy="620" r="2"/>
+      <circle cx="370" cy="620" r="2"/>
+      <circle cx="380" cy="620" r="2"/>
+      <circle cx="390" cy="620" r="2"/>
+      <circle cx="400" cy="620" r="2"/>
+    </g>
+    <g fill="#4DC8D4" fill-opacity="0.25">
+      <circle cx="1040" cy="120" r="2"/>
+      <circle cx="1050" cy="120" r="2"/>
+      <circle cx="1060" cy="120" r="2"/>
+      <circle cx="1070" cy="120" r="2"/>
+    </g>
+  </svg>
+  <div class="section-wrap">
+
+    <div class="reveal">
+      <div class="section-label">Upcoming Events</div>
+      <h2 class="section-heading">What's <span class="muted">Next</span></h2>
+      <p class="section-sub">
+        Register for upcoming AI4Botswana events. All events are free and open
+        to the community unless stated otherwise.
+      </p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         ★ HOW TO ADD AN EVENT CARD ★
+         ─────────────────────────────────────────────────────
+         Copy the template below and paste it inside
+         #eventsGrid. Remove the empty state div first.
+
+         registerForEvent(name, type, date, time, location)
+
+         Tag classes:
+           tag-breakfast | tag-workshop | tag-conference
+           tag-networking | tag-panel   | tag-demo
+    ════════════════════════════════════════════════════════ -->
+
+    <div class="events-grid" id="eventsGrid">
+
+      <!-- ╔══════════════════════════════════════════════════╗
+           ║  CARD TEMPLATE — copy from here                 ║
+           ╚══════════════════════════════════════════════════╝
+
+      <div class="event-card reveal">
+
+        <!- - Option 1: placeholder colour block - ->
+        <div class="card-thumb-placeholder">Event Image</div>
+
+        <!- - Option 2: real photo
+        <img class="card-thumb" src="event-photo.jpg" alt="Event Name" />
+        - ->
+
+        <div class="card-date-band">
+          <div class="card-date-block">
+            <div class="date-day">00</div>
+            <div class="date-month">Mon 2026</div>
+          </div>
+          <div class="card-tag-row">
+            <span class="event-tag tag-breakfast">Breakfast Session</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="card-title">Your Event Title</div>
+          <div class="card-location">📍 Venue, Gaborone</div>
+          <p class="card-desc">
+            Short description — what it is, who it is for,
+            what attendees can expect.
+          </p>
+          <div class="card-actions">
+            <button
+              class="btn-card-register"
+              onclick="registerForEvent(
+                'Your Event Title',
+                'Breakfast Session',
+                '00 Month 2026',
+                '00:00 — 00:00',
+                'Venue, Gaborone'
+              )"
+            >Register →</button>
+            <button class="btn-card-details">Details</button>
+          </div>
+        </div>
+      </div>
+
+           ╔══════════════════════════════════════════════════╗
+           ║  END OF TEMPLATE                                 ║
+           ╚══════════════════════════════════════════════════╝ -->
+
+      <div class="event-card reveal">
+
+        <div class="card-thumb-placeholder">Event Image</div>
+
+        <div class="card-date-band">
+          <div class="card-date-block">
+            <div class="date-day">31</div>
+            <div class="date-month">Jul 2026</div>
+          </div>
+          <div class="card-tag-row">
+            <span class="event-tag tag-breakfast">Breakfast Session</span>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="card-title">AI Beyond the Hype</div>
+          <div class="card-location">📍 Gaborone, Botswana</div>
+          <p class="card-desc">
+            Join us for a morning conversation cutting through the noise
+            around AI — what's real, what's overhyped, and what it actually
+            means for Botswana's businesses and workforce.
+          </p>
+          <div class="card-actions">
+            <button
+              class="btn-card-register"
+              onclick="registerForEvent(
+                'Breakfast Session: AI Beyond the Hype',
+                'Breakfast Session',
+                '31 July 2026',
+                '8:00 AM — 10:30 AM',
+                'Gaborone, Botswana'
+              )"
+            >Register →</button>
+            <button class="btn-card-details">Details</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /events-grid -->
+
+  </div>
+</section>
+
+
+<hr class="gold-divider" />
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer id="about">
+  <div class="footer-inner">
+
+    <div class="footer-top">
+
+      <div>
+        <div class="footer-logo-row">
+          <img src="logo.jpg" alt="AI4Botswana" />
+          <span class="footer-brand">AI4<span>Botswana</span></span>
+        </div>
+       
+      
+
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 AI4Botswana. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/showcase/ai4botswana" class="social-btn" aria-label="LinkedIn">in</a>
+        <a href="https://www.tiktok.com/@ai4botswana?_r=1&_t=ZS-93t6yL1cbcC" class="social-btn" aria-label="TikTok">TK</a>
+        <a href="https://www.instagram.com/ai4botswana/" class="social-btn" aria-label="Instagram">ig</a>
+        <a href="https://www.facebook.com/share/1AxHWuztEN/?mibextid=wwXIfr" class="social-btn" aria-label="Facebook">f</a>
+        <a href="https://wa.me/yourphonenumber" class="social-btn" aria-label="WhatsApp">WhatsApp</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- Scripts -->
+<script src="main.js"></script>
+
+</body>
+</html>

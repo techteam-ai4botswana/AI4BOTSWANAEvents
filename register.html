@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — AI4Botswana Events</title>
+  <meta name="description" content="Register for an AI4Botswana event. Fill in your details and confirm your spot." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════════════════════ -->
+<nav class="navbar">
+  <a href="index.html" class="nav-logo">
+    <img src="logo.jpg" alt="AI4Botswana Logo" />
+    <span class="nav-logo-text">AI4<span>Botswana</span></span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="index.html#upcoming">Events</a></li>
+    <li><a href="index.html#about">About</a></li>
+    
+  </ul>
+
+  <a href="index.html" class="nav-btn">← Back to Events</a>
+
+  <button class="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     REGISTER HERO — event details filled by JS from URL params
+═══════════════════════════════════════════════════════════ -->
+<section class="register-hero">
+  <div class="register-hero-inner">
+
+    <!-- Breadcrumb -->
+    <div class="reg-breadcrumb">
+      <a href="index.html">Events</a>
+      <span class="sep">/</span>
+      <span>Register</span>
+    </div>
+
+    <div class="reg-hero-content">
+
+      <!-- Left: event info -->
+      <div>
+        <div class="reg-event-label" id="heroEventType">Event Registration</div>
+
+        <h1 class="reg-title" id="heroEventName">Loading event…</h1>
+
+        <div class="reg-meta-strip">
+          <div class="reg-meta-item">
+            <span class="icon">📅</span>
+            <span id="heroDate">—</span>
+          </div>
+          <div class="reg-meta-item">
+            <span class="icon">⏰</span>
+            <span id="heroTime">—</span>
+          </div>
+          <div class="reg-meta-item">
+            <span class="icon">📍</span>
+            <span id="heroLocation">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: step tracker -->
+      <div class="reg-progress-panel">
+
+        <div class="progress-step">
+          <div class="step-dot active" id="step1">1</div>
+          <div class="step-label active" id="stepLabel1">Your Details</div>
+        </div>
+
+        <div class="progress-step">
+          <div class="step-dot" id="step2">2</div>
+          <div class="step-label" id="stepLabel2">Attendance</div>
+        </div>
+
+        <div class="progress-step">
+          <div class="step-dot" id="step3">3</div>
+          <div class="step-label" id="stepLabel3">Confirm</div>
+        </div>
+
+        <div class="progress-step">
+          <div class="step-dot" id="step4">4</div>
+          <div class="step-label" id="stepLabel4">Done</div>
+        </div>
+
+      </div>
+
+    </div><!-- /reg-hero-content -->
+
+  </div><!-- /register-hero-inner -->
+
+  <!-- Wave into white -->
+  <div class="reg-wave"></div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     REGISTER LAYOUT — form + sidebar
+═══════════════════════════════════════════════════════════ -->
+<div class="register-layout">
+
+  <!-- ── MAIN FORM ─────────────────────────────────────────── -->
+  <div>
+
+    <!-- Form wrap (hidden on success) -->
+    <div id="formWrap">
+      <form id="registrationForm" novalidate data-formspree-endpoint="https://formspree.io/f/xbdvzobl">
+
+        <!-- Hidden field to carry event name into email -->
+        <input type="hidden" id="hiddenEvent" name="event" value="" />
+
+        <!-- Submission error banner (shown if the send fails) -->
+        <div class="form-submit-error" id="submitError">
+          <span>⚠️</span>
+          <span id="submitErrorText">Something went wrong sending your registration. Please try again, or email us directly.</span>
+        </div>
+
+        <!-- ─── SECTION 1: Personal Information ──────────── -->
+        <div class="form-card form-section">
+
+          <div class="form-card-header">
+            <span class="form-card-title">Personal Information</span>
+            <span class="form-card-step">Section 1 of 3</span>
+          </div>
+
+          <div class="form-card-body">
+
+            <div class="form-section-title">Your Details</div>
+
+            <div class="form-row">
+              <div class="field-group">
+                <label class="field-label" for="firstName">
+                  First Name <span class="req">*</span>
+                </label>
+                <input
+                  class="field-input"
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  placeholder="e.g. Kabo"
+                  autocomplete="given-name"
+                />
+                <span class="field-error-msg">First name is required.</span>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="lastName">
+                  Last Name <span class="req">*</span>
+                </label>
+                <input
+                  class="field-input"
+                  type="text"
+                  id="lastName"
+                  name="lastName"
+                  placeholder="e.g. Molefe"
+                  autocomplete="family-name"
+                />
+                <span class="field-error-msg">Last name is required.</span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field-group">
+                <label class="field-label" for="email">
+                  Email Address <span class="req">*</span>
+                </label>
+                <input
+                  class="field-input"
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="yourname@email.com"
+                  autocomplete="email"
+                />
+                <span class="field-error-msg">Please enter a valid email address.</span>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="phone">
+                  Phone Number <span class="req">*</span>
+                </label>
+                <input
+                  class="field-input"
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="+267 7X XXX XXX"
+                  autocomplete="tel"
+                />
+                <span class="field-error-msg">Please enter a valid phone number.</span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field-group">
+                <label class="field-label" for="org">Organisation / Company</label>
+                <input
+                  class="field-input"
+                  type="text"
+                  id="org"
+                  name="org"
+                  placeholder="Your company, institution or university"
+                  autocomplete="organization"
+                />
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="role">Job Title / Role</label>
+                <input
+                  class="field-input"
+                  type="text"
+                  id="role"
+                  name="role"
+                  placeholder="e.g. Software Engineer, Student"
+                  autocomplete="organization-title"
+                />
+              </div>
+            </div>
+
+            <div class="form-row full">
+              <div class="field-group">
+                <label class="field-label" for="industry">Industry Sector</label>
+                <select class="field-select" id="industry" name="industry">
+                  <option value="" disabled selected>Select your sector</option>
+                  <option>Technology & Software</option>
+                  <option>Finance & Banking</option>
+                  <option>Healthcare</option>
+                  <option>Education & Academia</option>
+                  <option>Government & Public Sector</option>
+                  <option>Entrepreneurship / Startup</option>
+                  <option>Mining & Resources</option>
+                  <option>Agriculture</option>
+                  <option>Media & Communications</option>
+                  <option>Consulting</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+          </div><!-- /form-card-body -->
+        </div><!-- /form-card -->
+
+
+        <!-- ─── SECTION 2: Attendance Details ────────────── -->
+        <div class="form-card form-section">
+
+          <div class="form-card-header">
+            <span class="form-card-title">Attendance Details</span>
+            <span class="form-card-step">Section 2 of 3</span>
+          </div>
+
+          <div class="form-card-body">
+
+            <div class="form-section-title">How You Will Attend</div>
+
+            <div class="form-row full">
+              <div class="field-group">
+                <label class="field-label">
+                  Attendance Type <span class="req">*</span>
+                </label>
+                <div class="pill-row">
+                  <input
+                    class="pill-option"
+                    type="radio"
+                    name="attendance"
+                    id="att-inperson"
+                    value="In-Person"
+                    checked
+                  />
+                  <label for="att-inperson">In-Person</label>
+
+                  <input
+                    class="pill-option"
+                    type="radio"
+                    name="attendance"
+                    id="att-virtual"
+                    value="Virtual / Online"
+                  />
+                  <label for="att-virtual">Virtual / Online</label>
+
+                  <input
+                    class="pill-option"
+                    type="radio"
+                    name="attendance"
+                    id="att-undecided"
+                    value="Undecided"
+                  />
+                  <label for="att-undecided">Undecided</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field-group">
+                <label class="field-label" for="guests">
+                  Number of Additional Guests
+                </label>
+                <input
+                  class="field-input"
+                  type="number"
+                  id="guests"
+                  name="guests"
+                  min="0"
+                  max="10"
+                  value="0"
+                  placeholder="0"
+                />
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="dietary">
+                  Dietary Requirements
+                </label>
+                <select class="field-select" id="dietary" name="dietary">
+                  <option value="None">None</option>
+                  <option>Vegetarian</option>
+                  <option>Vegan</option>
+                  <option>Halal</option>
+                  <option>Gluten-free</option>
+                  <option>Kosher</option>
+                  <option>Other (specify in notes below)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row full">
+              <div class="field-group">
+                <label class="field-label">How Did You Hear About This Event?</label>
+                <div class="pill-row">
+                  <input class="pill-option" type="checkbox" name="source" id="src-li"  value="LinkedIn" />
+                  <label for="src-li">LinkedIn</label>
+
+                  <input class="pill-option" type="checkbox" name="source" id="src-wa"  value="WhatsApp" />
+                  <label for="src-wa">WhatsApp</label>
+
+                  <input class="pill-option" type="checkbox" name="source" id="src-ig"  value="Instagram" />
+                  <label for="src-ig">Instagram</label>
+
+                  <input class="pill-option" type="checkbox" name="source" id="src-fc"  value="Friend / Colleague" />
+                  <label for="src-fc">Friend / Colleague</label>
+
+                  <input class="pill-option" type="checkbox" name="source" id="src-em"  value="Email Newsletter" />
+                  <label for="src-em">Email Newsletter</label>
+
+                  <input class="pill-option" type="checkbox" name="source" id="src-web" value="Website" />
+                  <label for="src-web">Website</label>
+
+                  <input class="pill-option" type="checkbox" name="source" id="src-x"   value="X / Twitter" />
+                  <label for="src-x">X / Twitter</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row full">
+              <div class="field-group">
+                <label class="field-label" for="paymentProof">
+                  Proof of Payment <span class="field-optional">(only if this event requires a paid ticket)</span>
+                </label>
+
+                <div class="file-upload-wrap">
+                  <input
+                    class="field-file"
+                    type="file"
+                    id="paymentProof"
+                    name="paymentProof"
+                    accept="image/jpeg,image/png,image/webp,application/pdf"
+                  />
+                  <label for="paymentProof" class="file-upload-label" id="fileUploadLabel">
+                    <span class="file-upload-icon">📎</span>
+                    <span class="file-upload-text" id="fileUploadText">
+                      Click to upload receipt or screenshot &nbsp;·&nbsp; JPG, PNG or PDF &nbsp;·&nbsp; max 5MB
+                    </span>
+                  </label>
+                  <button type="button" class="file-remove-btn" id="fileRemoveBtn" aria-label="Remove file">✕</button>
+                </div>
+
+                <span class="field-error-msg" id="paymentProofError">Please upload a JPG, PNG or PDF file under 5MB.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- ─── SECTION 3: Additional Information ────────── -->
+        <div class="form-card form-section">
+
+          <div class="form-card-header">
+            <span class="form-card-title">Additional Information</span>
+            <span class="form-card-step">Section 3 of 3</span>
+          </div>
+
+          <div class="form-card-body">
+
+            <div class="form-section-title">Tell Us More</div>
+
+            <div class="form-row full">
+              <div class="field-group">
+                <label class="field-label" for="expectations">
+                  What Do You Hope to Gain from This Event?
+                </label>
+                <textarea
+                  class="field-textarea"
+                  id="expectations"
+                  name="expectations"
+                  placeholder="Share your goals, questions or what you are most looking forward to…"
+                  rows="4"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="form-row full">
+              <div class="field-group">
+                <label class="field-label" for="notes">
+                  Special Requirements or Notes
+                </label>
+                <textarea
+                  class="field-textarea"
+                  id="notes"
+                  name="notes"
+                  placeholder="Accessibility needs, special requests, or anything else we should know…"
+                  rows="3"
+                ></textarea>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+        <!-- ─── CONSENT + SUBMIT ─────────────────────────── -->
+        <div class="form-card">
+          <div class="form-card-body">
+
+            <div class="consent-box">
+
+              <div class="consent-item">
+                <input
+                  class="consent-checkbox"
+                  type="checkbox"
+                  id="consent1"
+                  name="consent1"
+                  required
+                />
+                <p class="consent-text">
+                  I agree to AI4Botswana's
+                  <a href="#">Privacy Policy</a>
+                  and consent to my registration details being used to
+                  process my attendance and send event-related communications.
+                  <strong>*</strong>
+                </p>
+              </div>
+
+              <div class="consent-item">
+                <input
+                  class="consent-checkbox"
+                  type="checkbox"
+                  id="consent2"
+                  name="consent2"
+                />
+                <p class="consent-text">
+                  I would like to receive updates about future AI4Botswana
+                  events, news and community opportunities. (Optional)
+                </p>
+              </div>
+
+            </div><!-- /consent-box -->
+
+            <div class="submit-area">
+              <button
+                type="button"
+                class="btn-submit-form"
+                id="submitBtn"
+              >
+                Confirm Registration &nbsp;→
+              </button>
+              <p class="submit-note">
+                Registration is free unless stated otherwise for this event.<br>
+                Your details will be sent directly to our team.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </form>
+    </div><!-- /formWrap -->
+
+
+    <!-- ─── SUCCESS SCREEN ────────────────────────────────── -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-circle">✓</div>
+      <h2 class="success-title">You're Registered!</h2>
+      <p class="success-msg">
+        Your registration has been confirmed. The AI4Botswana team will be
+        in touch with event details closer to the date.
+      </p>
+      <div class="success-email-tag">
+        📧 &nbsp; Confirmation sent for: <strong id="successEmail">—</strong>
+      </div>
+      <button
+        class="btn-back-events"
+        onclick="window.location.href='index.html'"
+      >
+        ← Back to Events
+      </button>
+    </div>
+
+  </div><!-- /main -->
+
+
+  <!-- ── SIDEBAR ────────────────────────────────────────────── -->
+  <aside class="sidebar">
+
+    <!-- Event summary card -->
+    <div class="sidebar-card event-card-sidebar">
+      <div class="sidebar-card-header">
+        <span class="sidebar-card-title">Event Summary</span>
+      </div>
+      <div class="sidebar-card-body">
+
+        <div class="sidebar-detail-row">
+          <div class="detail-icon">🎯</div>
+          <div class="detail-content">
+            <div class="detail-label">Event</div>
+            <div class="detail-value" id="sidebarEventName">Loading…</div>
+          </div>
+        </div>
+
+        <div class="sidebar-detail-row">
+          <div class="detail-icon">🏷️</div>
+          <div class="detail-content">
+            <div class="detail-label">Type</div>
+            <div class="detail-value" id="sidebarEventType">—</div>
+          </div>
+        </div>
+
+        <div class="sidebar-detail-row">
+          <div class="detail-icon">📅</div>
+          <div class="detail-content">
+            <div class="detail-label">Date</div>
+            <div class="detail-value" id="sidebarDate">—</div>
+          </div>
+        </div>
+
+        <div class="sidebar-detail-row">
+          <div class="detail-icon">⏰</div>
+          <div class="detail-content">
+            <div class="detail-label">Time</div>
+            <div class="detail-value" id="sidebarTime">—</div>
+          </div>
+        </div>
+
+        <div class="sidebar-detail-row">
+          <div class="detail-icon">📍</div>
+          <div class="detail-content">
+            <div class="detail-label">Location</div>
+            <div class="detail-value" id="sidebarLocation">—</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- What to expect card -->
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">
+        <span class="sidebar-card-title">What to Expect</span>
+      </div>
+      <div class="sidebar-card-body">
+        <ul class="tips-list">
+          <li>A confirmation will be sent to the AI4Botswana team immediately on submission.</li>
+          <li>Check your inbox for follow-up details closer to the event date.</li>
+          <li>Registration is completely free and open to all community members.</li>
+          <li>Bring a valid ID or your registration confirmation on the day.</li>
+          <li>Events are conducted in English unless stated otherwise.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Contact card -->
+    <div class="sidebar-card">
+      <div class="sidebar-card-header">
+        <span class="sidebar-card-title">Need Help?</span>
+      </div>
+      <div class="sidebar-card-body">
+        <ul class="tips-list">
+          <li>
+            Email us at
+            <a href="mailto:rockbisonbyjimin@gmail.com" style="color:var(--teal);">
+              rockbisonbyjimin@gmail.com
+            </a>
+            for any registration queries.
+          </li>
+          <li>For group registrations of 5 or more, please contact us directly.</li>
+        </ul>
+      </div>
+    </div>
+
+  </aside>
+
+</div><!-- /register-layout -->
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+
+    <div class="footer-top">
+
+      <div>
+        <div class="footer-logo-row">
+          <img src="logo.jpg" alt="AI4Botswana" />
+          <span class="footer-brand">AI4<span>Botswana</span></span>
+        </div>
+        <p class="footer-tagline">
+          Empowering Botswana through artificial intelligence —
+          community, education and innovation for Africa's digital future.
+        </p>
+      </div>
+
+     
+      
+
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a href="mailto:rockbisonbyjimin@gmail.com">rockbisonbyjimin@gmail.com</a></li>
+          <li><a href="#">Gaborone, Botswana</a></li>
+          <li><a href="#">Media Accreditation</a></li>
+          <li><a href="#">Partnership Enquiries</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 AI4Botswana. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="#" class="social-btn" aria-label="LinkedIn">in</a>
+        <a href="#" class="social-btn" aria-label="Twitter/X">𝕏</a>
+        <a href="#" class="social-btn" aria-label="Instagram">ig</a>
+        <a href="#" class="social-btn" aria-label="YouTube">yt</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- Scripts -->
+<script src="main.js"></script>
+
+</body>
+</html>
