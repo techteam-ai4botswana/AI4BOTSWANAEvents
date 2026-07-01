@@ -353,7 +353,7 @@ ${d.timestamp}
   /* ── Submit handler ─────────────────────────────────────── */
   const submitErrorBox  = document.getElementById('submitError');
   const submitErrorText = document.getElementById('submitErrorText');
-  const formspreeEndpoint = form.dataset.formspreeEndpoint || '';
+  const formEndpoint = form.dataset.formEndpoint || '';
 
   function hideSubmitError() {
     if (submitErrorBox) submitErrorBox.classList.remove('visible');
@@ -378,17 +378,23 @@ ${d.timestamp}
     submitBtn.textContent = 'Sending…';
 
     // Guard: catch a forgotten/placeholder endpoint before wasting a request
-    if (!formspreeEndpoint || formspreeEndpoint.includes('YOUR_FORM_ID')) {
+    if (!formEndpoint || formEndpoint.includes('your@email.com')) {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Confirm Registration \u00A0\u2192';
-      showSubmitError('Registration sending isn\u2019t configured yet — the Formspree endpoint is missing. Please contact the site admin.');
+      showSubmitError('Registration sending isn\u2019t configured yet — the form endpoint is missing. Please contact the site admin.');
       return;
     }
 
     try {
       // FormData (not JSON) so the proof-of-payment file can attach as multipart
       const fd = new FormData();
+
+      // FormSubmit.co config fields
       fd.append('_subject', `[AI4BW Registration] ${d.event} — ${d.firstName} ${d.lastName}`);
+      fd.append('_template', 'table');   // cleaner table-formatted email
+      fd.append('_captcha', 'false');    // required for AJAX — otherwise FormSubmit returns
+                                          // an HTML captcha page instead of JSON and submission fails
+
       fd.append('event', d.event);
       fd.append('eventType', d.eventType);
       fd.append('eventDate', d.eventDate);
@@ -410,27 +416,27 @@ ${d.timestamp}
       fd.append('newsletterOptIn', d.newsletter);
       fd.append('submittedAt', d.timestamp);
       fd.append('paymentProofAttached', paymentFile ? 'Yes' : 'No');
-      fd.append('message', buildEmailBody(d) + (paymentFile ? `\n\nProof of Payment: attached (${paymentFile.name})` : '\n\nProof of Payment: not provided'));
 
       if (paymentFile) {
         fd.append('proofOfPayment', paymentFile, paymentFile.name);
       }
 
-      const response = await fetch(formspreeEndpoint, {
+      const response = await fetch(formEndpoint, {
         method: 'POST',
         headers: { 'Accept': 'application/json' },
         body: fd,
       });
 
-      if (!response.ok) {
-        // Try to surface Formspree's own error message if present
-        let detail = '';
-        try {
-          const errData = await response.json();
-          detail = errData?.errors?.map(e => e.message).join(', ') || '';
-        } catch (_) { /* ignore parse errors */ }
+      // FormSubmit returns JSON on success/validation errors, but can return an
+      // HTML page (e.g. if the target email isn't confirmed yet) — guard against that.
+      let payload = null;
+      const contentType = response.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        try { payload = await response.json(); } catch (_) { /* ignore parse errors */ }
+      }
 
-        throw new Error(detail || `Request failed (status ${response.status})`);
+      if (!response.ok) {
+        throw new Error(payload?.message || `Request failed (status ${response.status})`);
       }
 
       // Success
