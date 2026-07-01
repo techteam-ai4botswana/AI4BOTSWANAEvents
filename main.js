@@ -129,80 +129,6 @@
     return /^[\d\s\+\-\(\)]{7,}$/.test(val);
   }
 
-  /* ── Proof of payment: file upload UI ────────────────────── */
-  const paymentInput      = document.getElementById('paymentProof');
-  const fileUploadLabel   = document.getElementById('fileUploadLabel');
-  const fileUploadText    = document.getElementById('fileUploadText');
-  const fileRemoveBtn     = document.getElementById('fileRemoveBtn');
-  const paymentProofError = document.getElementById('paymentProofError');
-
-  const MAX_FILE_BYTES = 5 * 1024 * 1024; // 5MB
-  const ALLOWED_FILE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'application/pdf'];
-  const DEFAULT_FILE_TEXT = 'Click to upload receipt or screenshot · JPG, PNG or PDF · max 5MB';
-
-  function isValidPaymentFile(file) {
-    return ALLOWED_FILE_TYPES.includes(file.type) && file.size <= MAX_FILE_BYTES;
-  }
-
-  function formatFileSize(bytes) {
-    return bytes < 1024 * 1024
-      ? `${Math.round(bytes / 1024)}KB`
-      : `${(bytes / (1024 * 1024)).toFixed(1)}MB`;
-  }
-
-  function clearPaymentFileError() {
-    if (fileUploadLabel) fileUploadLabel.classList.remove('file-error');
-    if (paymentProofError) paymentProofError.classList.remove('visible');
-  }
-
-  function showPaymentFileError(msg) {
-    if (fileUploadLabel) fileUploadLabel.classList.add('file-error');
-    if (paymentProofError) {
-      paymentProofError.textContent = msg;
-      paymentProofError.classList.add('visible');
-    }
-  }
-
-  function resetPaymentFile() {
-    if (paymentInput) paymentInput.value = '';
-    if (fileUploadLabel) fileUploadLabel.classList.remove('has-file', 'file-error');
-    if (fileUploadText) fileUploadText.textContent = DEFAULT_FILE_TEXT;
-    if (fileRemoveBtn) fileRemoveBtn.classList.remove('visible');
-    clearPaymentFileError();
-  }
-
-  if (paymentInput) {
-    paymentInput.addEventListener('change', () => {
-      clearPaymentFileError();
-      const file = paymentInput.files && paymentInput.files[0];
-
-      if (!file) { resetPaymentFile(); return; }
-
-      if (!isValidPaymentFile(file)) {
-        const reason = !ALLOWED_FILE_TYPES.includes(file.type)
-          ? 'That file type isn\u2019t supported — use JPG, PNG or PDF.'
-          : 'That file is too large — max size is 5MB.';
-        showPaymentFileError(reason);
-        paymentInput.value = '';
-        if (fileUploadLabel) fileUploadLabel.classList.remove('has-file');
-        if (fileUploadText) fileUploadText.textContent = DEFAULT_FILE_TEXT;
-        if (fileRemoveBtn) fileRemoveBtn.classList.remove('visible');
-        return;
-      }
-
-      if (fileUploadLabel) fileUploadLabel.classList.add('has-file');
-      if (fileUploadText) fileUploadText.textContent = `${file.name} (${formatFileSize(file.size)})`;
-      if (fileRemoveBtn) fileRemoveBtn.classList.add('visible');
-    });
-  }
-
-  if (fileRemoveBtn) {
-    fileRemoveBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      resetPaymentFile();
-    });
-  }
-
   /* ── Live validation: clear error on change ─────────────── */
   form.querySelectorAll('.field-input, .field-select, .field-textarea').forEach(el => {
     el.addEventListener('input', () => clearError(el));
@@ -353,7 +279,7 @@ ${d.timestamp}
   /* ── Submit handler ─────────────────────────────────────── */
   const submitErrorBox  = document.getElementById('submitError');
   const submitErrorText = document.getElementById('submitErrorText');
-  const formEndpoint = form.dataset.formEndpoint || '';
+  const formspreeEndpoint = form.dataset.formspreeEndpoint || '';
 
   function hideSubmitError() {
     if (submitErrorBox) submitErrorBox.classList.remove('visible');
@@ -371,78 +297,63 @@ ${d.timestamp}
     if (!validateForm()) return;
 
     const d = collectFormData();
-    const paymentFile = paymentInput && paymentInput.files && paymentInput.files[0];
 
     // Disable button immediately to prevent double-submits
     submitBtn.disabled = true;
     submitBtn.textContent = 'Sending…';
 
     // Guard: catch a forgotten/placeholder endpoint before wasting a request
-    if (!formEndpoint || formEndpoint.includes('your@email.com')) {
+    if (!formspreeEndpoint || formspreeEndpoint.includes('YOUR_FORM_ID')) {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Confirm Registration \u00A0\u2192';
-      showSubmitError('Registration sending isn\u2019t configured yet — the form endpoint is missing. Please contact the site admin.');
+      showSubmitError('Registration sending isn\u2019t configured yet — the Formspree endpoint is missing. Please contact the site admin.');
       return;
     }
 
     try {
-      // FormData (not JSON) so the proof-of-payment file can attach as multipart
-      const fd = new FormData();
-
-      // FormSubmit.co config fields
-      fd.append('_subject', `[AI4BW Registration] ${d.event} — ${d.firstName} ${d.lastName}`);
-      fd.append('_template', 'table');   // cleaner table-formatted email
-      fd.append('_captcha', 'false');    // required for AJAX — otherwise FormSubmit returns
-                                          // an HTML captcha page instead of JSON and submission fails
-
-      fd.append('event', d.event);
-      fd.append('eventType', d.eventType);
-      fd.append('eventDate', d.eventDate);
-      fd.append('eventTime', d.eventTime);
-      fd.append('eventLocation', d.eventLoc);
-      fd.append('firstName', d.firstName);
-      fd.append('lastName', d.lastName);
-      fd.append('email', d.email);
-      fd.append('phone', d.phone);
-      fd.append('organisation', d.org);
-      fd.append('role', d.role);
-      fd.append('industry', d.industry);
-      fd.append('attendanceType', d.attendance);
-      fd.append('extraGuests', d.guests);
-      fd.append('dietary', d.dietary);
-      fd.append('heardVia', d.sources);
-      fd.append('expectations', d.expectations);
-      fd.append('notes', d.notes);
-      fd.append('newsletterOptIn', d.newsletter);
-      fd.append('submittedAt', d.timestamp);
-      fd.append('paymentProofAttached', paymentFile ? 'Yes' : 'No');
-
-      if (paymentFile) {
-        fd.append('proofOfPayment', paymentFile, paymentFile.name);
-      }
-
-      const response = await fetch(formEndpoint, {
+      const response = await fetch(formspreeEndpoint, {
         method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: fd,
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          _subject: `[AI4BW Registration] ${d.event} — ${d.firstName} ${d.lastName}`,
+          event: d.event,
+          eventType: d.eventType,
+          eventDate: d.eventDate,
+          eventTime: d.eventTime,
+          eventLocation: d.eventLoc,
+          firstName: d.firstName,
+          lastName: d.lastName,
+          email: d.email,
+          phone: d.phone,
+          organisation: d.org,
+          role: d.role,
+          industry: d.industry,
+          attendanceType: d.attendance,
+          extraGuests: d.guests,
+          dietary: d.dietary,
+          heardVia: d.sources,
+          expectations: d.expectations,
+          notes: d.notes,
+          newsletterOptIn: d.newsletter,
+          submittedAt: d.timestamp,
+          message: buildEmailBody(d), // full formatted summary as a fallback field
+        }),
       });
 
-      // FormSubmit returns JSON on success/validation errors, but can return an
-      // HTML page (e.g. if the target email isn't confirmed yet) — guard against that.
-      let payload = null;
-      const contentType = response.headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
-        try { payload = await response.json(); } catch (_) { /* ignore parse errors */ }
-      }
-
       if (!response.ok) {
-        throw new Error(payload?.message || `Request failed (status ${response.status})`);
+        // Try to surface Formspree's own error message if present
+        let detail = '';
+        try {
+          const errData = await response.json();
+          detail = errData?.errors?.map(e => e.message).join(', ') || '';
+        } catch (_) { /* ignore parse errors */ }
+
+        throw new Error(detail || `Request failed (status ${response.status})`);
       }
 
       // Success
       formWrap.style.display = 'none';
       successScreen.classList.add('active');
-      resetPaymentFile();
 
       const successEmailEl = document.getElementById('successEmail');
       if (successEmailEl) successEmailEl.textContent = d.email;
