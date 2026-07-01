@@ -319,14 +319,14 @@
 ═══════════════════════════════════════════════════════════ -->
 <nav class="navbar">
   <a href="index.html" class="nav-logo">
-    <img src="logo.jpg" alt="AI4Botswana Logo" />
+    <img src="logo.png" alt="AI4Botswana Logo" />
     <span class="nav-logo-text">AI4<span>Botswana</span></span>
   </a>
 
   <ul class="nav-links">
     <li><a href="#upcoming">Events</a></li>
     <li><a href="#about">About</a></li>
-    
+    <li><a href="mailto:rockbisonbyjimin@gmail.com">Contact</a></li>
   </ul>
 
   <a href="#upcoming" class="nav-btn">Register Now</a>
@@ -861,7 +861,8 @@
          Copy the template below and paste it inside
          #eventsGrid. Remove the empty state div first.
 
-         registerForEvent(name, type, date, time, location)
+         Set the Register button's href to that event's
+         Google Form registration link.
 
          Tag classes:
            tag-breakfast | tag-workshop | tag-conference
@@ -901,16 +902,12 @@
             what attendees can expect.
           </p>
           <div class="card-actions">
-            <button
+            <a
               class="btn-card-register"
-              onclick="registerForEvent(
-                'Your Event Title',
-                'Breakfast Session',
-                '00 Month 2026',
-                '00:00 — 00:00',
-                'Venue, Gaborone'
-              )"
-            >Register →</button>
+              href="YOUR_GOOGLE_FORM_LINK_HERE"
+              target="_blank"
+              rel="noopener"
+            >Register →</a>
             <button class="btn-card-details">Details</button>
           </div>
         </div>
@@ -943,16 +940,12 @@
             means for Botswana's businesses and workforce.
           </p>
           <div class="card-actions">
-            <button
+            <a
               class="btn-card-register"
-              onclick="registerForEvent(
-                'Breakfast Session: AI Beyond the Hype',
-                'Breakfast Session',
-                '31 July 2026',
-                '8:00 AM — 10:30 AM',
-                'Gaborone, Botswana'
-              )"
-            >Register →</button>
+              href="https://docs.google.com/forms/d/e/1FAIpQLSejx0hudPENhBS4pVLreKZcONToT0Z0c4UIiLoypJC_Fz4mcA/viewform?usp=publish-editor"
+              target="_blank"
+              rel="noopener"
+            >Register →</a>
             <button class="btn-card-details">Details</button>
           </div>
         </div>
@@ -979,7 +972,7 @@
 
       <div>
         <div class="footer-logo-row">
-          <img src="logo.jpg" alt="AI4Botswana" />
+          <img src="logo.png" alt="AI4Botswana" />
           <span class="footer-brand">AI4<span>Botswana</span></span>
         </div>
        
