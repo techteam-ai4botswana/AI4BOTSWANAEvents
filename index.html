@@ -298,9 +298,217 @@
       line-height: 1.7;
     }
 
+    /* ── EVENT CARD: PRICING BLOCK ── */
+    .card-pricing {
+      margin: 14px 0 18px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: rgba(212,168,50,0.04);
+    }
+
+    .pricing-tier-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      font-size: 11.5px;
+      line-height: 1.5;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px dashed var(--border);
+    }
+
+    .pricing-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .pricing-list li {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .pricing-list .pricing-cat {
+      color: var(--text-mid);
+    }
+
+    .pricing-list .pricing-amount {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+
+    .pricing-list .pricing-note {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 400;
+      color: var(--text-light);
+      font-family: var(--font-body);
+      margin-top: 1px;
+    }
+
+    /* Dark-theme override for cards inside .upcoming-section */
+    .upcoming-section .card-pricing {
+      background: rgba(212,168,50,0.06);
+      border-color: rgba(212,168,50,0.25);
+    }
+    .upcoming-section .pricing-tier-note {
+      color: rgba(240,244,255,0.5);
+      border-bottom-color: rgba(255,255,255,0.12);
+    }
+    .upcoming-section .pricing-list .pricing-cat {
+      color: rgba(240,244,255,0.65);
+    }
+    .upcoming-section .pricing-list .pricing-amount {
+      color: #F0F4FF;
+    }
+    .upcoming-section .pricing-list .pricing-note {
+      color: rgba(240,244,255,0.4);
+    }
+
     /* Gold divider on dark becomes subtle */
     .upcoming-section + .gold-divider {
       background: linear-gradient(90deg, #0b1628, #D4A832, #0b1628);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      padding: 64px 60px 40px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 32px;
+    }
+
+    .footer-logo-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .footer-logo-row img {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+    }
+
+    .footer-brand {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-brand span { color: var(--cyan); }
+
+    .footer-tagline {
+      font-size: 13px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.5);
+      max-width: 240px;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--cyan); }
+
+    .footer-links li {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.3);
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-btn {
+      width: 34px; height: 34px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.5);
+      transition: all 0.2s;
+    }
+
+    .social-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .social-btn:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 900px) {
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 560px) {
+      .footer-top { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 700px) {
@@ -319,14 +527,12 @@
 ═══════════════════════════════════════════════════════════ -->
 <nav class="navbar">
   <a href="index.html" class="nav-logo">
-    <img src="logo.png" alt="AI4Botswana Logo" />
+    <img src="logo.jpg" alt="AI4Botswana Logo" />
     <span class="nav-logo-text">AI4<span>Botswana</span></span>
   </a>
 
   <ul class="nav-links">
     <li><a href="#upcoming">Events</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="mailto:rockbisonbyjimin@gmail.com">Contact</a></li>
   </ul>
 
   <a href="#upcoming" class="nav-btn">Register Now</a>
@@ -527,8 +733,6 @@
        banner. Update the details below for each new event.
        Remove this entire block if you don't want a featured card.
   ─────────────────────────────────────────────────────────── -->
-
-  </div>
 
 </div><!-- /hero-banner -->
 
@@ -939,6 +1143,30 @@
             around AI — what's real, what's overhyped, and what it actually
             means for Botswana's businesses and workforce.
           </p>
+
+          <div class="card-pricing">
+            <div class="pricing-tier-note">
+              🎟️ <span>3 ticket tiers — Early Bird, Standard &amp; Door. Prices rise with
+              each tier; exact tier pricing and cutoff dates are on the registration form.</span>
+            </div>
+            <ul class="pricing-list">
+              <li>
+                <span class="pricing-cat">Student</span>
+                <span class="pricing-amount">P250
+                  <span class="pricing-note">P200 if bringing a friend</span>
+                </span>
+              </li>
+              <li>
+                <span class="pricing-cat">Youth / Unemployed</span>
+                <span class="pricing-amount">P250</span>
+              </li>
+              <li>
+                <span class="pricing-cat">Corporate</span>
+                <span class="pricing-amount">P500</span>
+              </li>
+            </ul>
+          </div>
+
           <div class="card-actions">
             <a
               class="btn-card-register"
@@ -1052,6 +1280,7 @@
 
   </div>
 </footer>
+
 
 
 <!-- Scripts -->
